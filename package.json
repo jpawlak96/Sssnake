@@ -1,5 +1,5 @@
 {
-  "name": "Sssnake",
+  "name": "sssnake",
   "license": "",
   "scripts": {
     "start": "webpack serve --mode=development",
