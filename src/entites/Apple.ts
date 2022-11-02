@@ -5,7 +5,7 @@ import { Utils } from "../Utils";
 import { HUD } from "../HUD";
 
 export class Apple {
-  position: Rectangle = new Rectangle();
+  position!: Rectangle;
   snake: Snake;
   hud: HUD;
 

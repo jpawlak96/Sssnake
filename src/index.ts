@@ -1,6 +1,7 @@
-import { Application, BitmapFont } from "pixi.js";
-import { SCREEN_SIZE } from "./Constants";
-import { Game } from "./Game";
+import { BitmapFont } from "pixi.js";
+import { SCREEN_SIZE, BACKGROUND_COLOR } from "./Constants";
+import { Manager } from "./managers/Manager";
+import { MenuScene } from "./scenes/MenuScene";
 
 BitmapFont.from("comic 32", {
   fill: "#000000",
@@ -8,13 +9,5 @@ BitmapFont.from("comic 32", {
   fontSize: 32,
 });
 
-const app = new Application({
-  view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
-  resolution: window.devicePixelRatio || 1,
-  autoDensity: true,
-  backgroundColor: 0xffffff,
-  width: SCREEN_SIZE,
-  height: SCREEN_SIZE,
-});
-
-new Game(app);
+Manager.initialize(SCREEN_SIZE, SCREEN_SIZE, BACKGROUND_COLOR);
+Manager.changeScene(MenuScene);

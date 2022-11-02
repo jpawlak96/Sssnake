@@ -1,11 +1,12 @@
-import { Application, Graphics } from "pixi.js";
-import { Apple } from "./entites/Apple";
-import { TICK_PER_SEC } from "./Constants";
-import { Snake } from "./entites/Snake";
-import { State } from "./enums/State";
-import { HUD } from "./HUD";
+import { Application, Container, Graphics } from "pixi.js";
+import { Apple } from "../entites/Apple";
+import { TICK_PER_SEC } from "../Constants";
+import { Snake } from "../entites/Snake";
+import { State } from "../enums/State";
+import { HUD } from "../HUD";
+import { IScene } from "../managers/IScene";
 
-export class Game {
+export class GameScene extends Container implements IScene {
   app: Application;
   graphy: Graphics;
   state: State;
@@ -16,6 +17,8 @@ export class Game {
   apple: Apple;
 
   constructor(app: Application) {
+    super();
+
     this.app = app;
     this.app.ticker.add(this.update, this);
 
@@ -43,7 +46,7 @@ export class Game {
     this.draw();
   }
 
-  draw() {
+  private draw() {
     this.graphy.clear();
     this.snake.draw(this.graphy);
     this.apple.draw(this.graphy);
@@ -59,9 +62,7 @@ export class Game {
   private isColision() {
     return (
       !this.app.screen.intersects(this.snake.head) ||
-      this.snake.parts.filter(
-        (part) => part !== this.snake.head && part.intersects(this.snake.head)
-      ).length
+      this.snake.parts.filter((part) => part !== this.snake.head && part.intersects(this.snake.head)).length
     );
   }
 }
