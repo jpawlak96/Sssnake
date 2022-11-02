@@ -1,5 +1,5 @@
-import { DisplayObject } from "pixi.js";
+import { DisplayObject } from 'pixi.js'
 
 export interface IScene extends DisplayObject {
-    update(framesPassed: number): void;
+  update: (framesPassed: number) => void
 }
