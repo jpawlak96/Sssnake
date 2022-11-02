@@ -19,6 +19,7 @@ export class Manager {
     })
 
     Manager.app.ticker.add(Manager.update)
+    document.addEventListener('visibilitychange', Manager.onVisibilityChange, false)
   }
 
   public static changeScene (Clazz: new (identifier: Application) => IScene): void {
@@ -34,6 +35,14 @@ export class Manager {
   private static update (framesPassed: number): void {
     if (Manager.currentScene) {
       Manager.currentScene.update(framesPassed)
+    }
+  }
+
+  private static onVisibilityChange (): void {
+    if (document.visibilityState === 'hidden') {
+      Manager.app.ticker.stop()
+    } else {
+      Manager.app.ticker.start()
     }
   }
 }
