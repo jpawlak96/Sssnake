@@ -1,12 +1,12 @@
 import { Application } from '@pixi/app'
-import { IScene } from './IScene'
+import { AbstractContainer } from './scenes/AbstractScene'
 
 // eslint-disable-next-line
 export class Manager {
   private constructor () {}
 
   private static app: Application
-  private static currentScene: IScene | null
+  private static currentScene: AbstractContainer
 
   public static initialize (width: number, height: number, background: number): void {
     Manager.app = new Application({
@@ -22,19 +22,20 @@ export class Manager {
     document.addEventListener('visibilitychange', Manager.onVisibilityChange, false)
   }
 
-  public static changeScene (Clazz: new (identifier: Application) => IScene): void {
+  public static changeScene (Clazz: new (width: number, height: number) => AbstractContainer): void {
     if (Manager.currentScene) {
       Manager.app.stage.removeChild(Manager.currentScene)
       Manager.currentScene.destroy()
     }
 
-    Manager.currentScene = new Clazz(this.app)
+    Manager.currentScene = new Clazz(Manager.app.screen.width, Manager.app.screen.height)
     Manager.app.stage.addChild(Manager.currentScene)
   }
 
-  private static update (framesPassed: number): void {
+  private static update (): void {
     if (Manager.currentScene) {
-      Manager.currentScene.update(framesPassed)
+      const deltaTime = Manager.app.ticker.elapsedMS
+      Manager.currentScene.update(deltaTime)
     }
   }
 

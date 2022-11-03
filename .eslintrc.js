@@ -12,8 +12,11 @@ module.exports = {
     project: ['./tsconfig.json']
   },
   rules: {
-    '@typescript-eslint/restrict-plus-operands': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off'
   },
-  ignorePatterns: ['dist/*', 'node_modules/*']
+  ignorePatterns: [
+    'dist/*',
+    'node_modules/*',
+    '.gitignore'
+  ]
 }

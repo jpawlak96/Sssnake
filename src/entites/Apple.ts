@@ -1,7 +1,7 @@
 import { Graphics, Rectangle } from 'pixi.js'
 import { TILES_NUMBER, TILE_SIZE } from '../Constants'
 import { Snake } from './Snake'
-import { HUD } from '../HUD'
+import { HUD } from '../hud/HUD'
 import * as Utils from '../Utils'
 
 export class Apple {
@@ -9,9 +9,9 @@ export class Apple {
   snake: Snake
   hud: HUD
 
-  constructor (snake: Snake, ui: HUD) {
+  constructor (snake: Snake, hud: HUD) {
     this.snake = snake
-    this.hud = ui
+    this.hud = hud
     this.position = this.newPosition()
   }
 
@@ -19,7 +19,7 @@ export class Apple {
     if (this.snake.head.intersects(this.position)) {
       this.position = this.newPosition()
       this.snake.isHungry = false
-      this.hud.appleEaten++
+      this.hud.increaseEatenApples()
     }
   }
 

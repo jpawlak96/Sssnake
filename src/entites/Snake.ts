@@ -3,8 +3,6 @@ import { TILE_SIZE } from '../Constants'
 import { Direction } from '../enums/Direction'
 
 export class Snake {
-  screen: Rectangle
-
   parts: Rectangle[]
   head: Rectangle
 
@@ -13,8 +11,7 @@ export class Snake {
   moveDirection: Direction = Direction.Up
   oldMoveDirection: Direction = this.moveDirection
 
-  constructor (screen: Rectangle) {
-    this.screen = screen
+  constructor () {
     this.parts = [
       new Rectangle(4 * TILE_SIZE, 4 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
       new Rectangle(4 * TILE_SIZE, 3 * TILE_SIZE, TILE_SIZE, TILE_SIZE),

@@ -1,30 +1,28 @@
-import { Application, BitmapText, Container } from 'pixi.js'
-import { IScene } from '../managers/IScene'
-import { Manager } from '../managers/Manager'
+import { BitmapText } from 'pixi.js'
+import { FONT_NAME } from '../Constants'
+import { Manager } from '../Manager'
+import { AbstractContainer } from './AbstractScene'
 import { GameScene } from './GameScene'
 
-export class MenuScene extends Container implements IScene {
-  app: Application
-
+export class MenuScene extends AbstractContainer {
   startPrompt: BitmapText
   scaleVelocity: number = 0.008
   deltaCounter: number = 0
   tickTime: number = 0.5
 
-  constructor (app: Application) {
-    super()
-    this.app = app
+  constructor (width: number, height: number) {
+    super(width, height)
 
-    this.startPrompt = new BitmapText('Press any key to start', { fontName: 'comic 32' })
+    this.startPrompt = new BitmapText('Press any key to start', { fontName: FONT_NAME })
+    this.startPrompt.position.set(this.bounds.width / 2, this.bounds.height / 2)
     this.startPrompt.anchor.set(0.5)
-    this.startPrompt.position.set(this.app.screen.width / 2, this.app.screen.height / 2)
     this.addChild(this.startPrompt)
 
     document.addEventListener('keydown', () => Manager.changeScene(GameScene), { once: true })
   }
 
-  update (): void {
-    this.deltaCounter += this.app.ticker.elapsedMS / 1000
+  update (deltaTime: number): void {
+    this.deltaCounter += deltaTime / 1000
     if (this.deltaCounter > this.tickTime) {
       this.scaleVelocity *= -1
       this.deltaCounter -= this.tickTime
