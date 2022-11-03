@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -77,6 +78,9 @@ module.exports = (env, argv) => {
         template: 'src/index.ejs',
         hash: true,
         minify: false
+      }),
+      new webpack.ProvidePlugin({
+        PIXI: 'pixi.js'
       })
     ]
   })
