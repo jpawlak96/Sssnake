@@ -1,12 +1,11 @@
-import { BitmapText, Container } from 'pixi.js'
-import { FONT_NAME } from '../Constants'
+import { Text, Container } from 'pixi.js'
 import { State } from '../enums/State'
 
 export class HUD extends Container {
   eatenApples: number = 0
 
-  scoreText: BitmapText = new BitmapText('0 apples', { fontName: FONT_NAME })
-  endText: BitmapText = new BitmapText('', { fontName: FONT_NAME })
+  scoreText: Text = new Text('0 apples', { fontFamily: 'ComicGecko', fontSize: 32 })
+  endText: Text = new Text('', { fontFamily: 'ComicGecko', fontSize: 32 })
 
   constructor (width: number, height: number) {
     super()

@@ -1,11 +1,10 @@
-import { BitmapText } from 'pixi.js'
-import { FONT_NAME } from '../Constants'
+import { Text } from 'pixi.js'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'
 import { GameScene } from './GameScene'
 
 export class MenuScene extends AbstractContainer {
-  startPrompt: BitmapText
+  startPrompt: Text
   scaleVelocity: number = 0.008
   deltaCounter: number = 0
   tickTime: number = 0.5
@@ -13,8 +12,18 @@ export class MenuScene extends AbstractContainer {
   constructor (width: number, height: number) {
     super(width, height)
 
-    this.startPrompt = new BitmapText('Press any key to start', { fontName: FONT_NAME })
-    this.startPrompt.position.set(this.bounds.width / 2, this.bounds.height / 2)
+    const logoShadow = new Text('SSSNAKE', { fontFamily: 'ComicGecko', fontSize: 140, fill: 0xe6e600 })
+    logoShadow.position.set(this.bounds.width / 2 + 5, this.bounds.height / 6 * 2 + 5)
+    logoShadow.anchor.set(0.5)
+    this.addChild(logoShadow)
+
+    const logo = new Text('SSSNAKE', { fontFamily: 'ComicGecko', fontSize: 140, fill: 0xffff00 })
+    logo.position.set(this.bounds.width / 2 - 5, this.bounds.height / 6 * 2 - 5)
+    logo.anchor.set(0.5)
+    this.addChild(logo)
+
+    this.startPrompt = new Text('Press any key to start', { fontFamily: 'ComicGecko', fontSize: 32 })
+    this.startPrompt.position.set(this.bounds.width / 2, this.bounds.height / 6 * 4)
     this.startPrompt.anchor.set(0.5)
     this.addChild(this.startPrompt)
 

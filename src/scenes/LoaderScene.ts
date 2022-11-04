@@ -1,3 +1,4 @@
+import { WebfontLoaderPlugin } from 'pixi-webfont-loader'
 import { Container, Graphics, Loader } from 'pixi.js'
 import { assets } from '../assets'
 import { Manager } from '../Manager'
@@ -31,6 +32,7 @@ export class LoaderScene extends AbstractContainer {
     this.loaderBar.position.y = (this.bounds.height - this.loaderBar.height) / 2
     this.addChild(this.loaderBar)
 
+    Loader.registerPlugin(WebfontLoaderPlugin)
     Loader.shared.onProgress.add(this.onDownloadProgress, this)
     Loader.shared.onComplete.once(this.onDownloadComplete, this)
     Loader.shared.add(assets)
