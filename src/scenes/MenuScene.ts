@@ -1,4 +1,4 @@
-import { Text } from 'pixi.js'
+import { Graphics, Text } from 'pixi.js'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'
 import { GameScene } from './GameScene'
@@ -11,6 +11,12 @@ export class MenuScene extends AbstractContainer {
 
   constructor (width: number, height: number) {
     super(width, height)
+
+    const graphy: Graphics = new Graphics()
+    graphy.beginFill(0x008000)
+    graphy.drawRect(0, 0, this.bounds.width, this.bounds.height)
+    graphy.endFill()
+    this.addChild(graphy)
 
     const logoShadow = new Text('SSSNAKE', { fontFamily: 'ComicGecko', fontSize: 140, fill: 0xe6e600 })
     logoShadow.position.set(this.bounds.width / 2 + 5, this.bounds.height / 6 * 2 + 5)

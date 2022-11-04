@@ -6,6 +6,7 @@ import { AbstractContainer } from './AbstractScene'
 import { MenuScene } from './MenuScene'
 
 export class LoaderScene extends AbstractContainer {
+  background: Graphics
   loaderBarFill: Graphics
   loaderBarBoder: Graphics
   loaderBar: any
@@ -13,16 +14,22 @@ export class LoaderScene extends AbstractContainer {
   constructor (width: number, height: number) {
     super(width, height)
 
+    this.background = new Graphics()
+    this.background.beginFill(0x008000)
+    this.background.drawRect(0, 0, this.bounds.width, this.bounds.height)
+    this.background.endFill()
+    this.addChild(this.background)
+
     const loaderBarWidth = this.bounds.width * 0.8
 
     this.loaderBarFill = new Graphics()
-    this.loaderBarFill.beginFill(0x008800, 1)
+    this.loaderBarFill.beginFill(0x8b0000)
     this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 50)
     this.loaderBarFill.endFill()
     this.loaderBarFill.scale.x = 0
 
     this.loaderBarBoder = new Graphics()
-    this.loaderBarBoder.lineStyle(10, 0x0, 1)
+    this.loaderBarBoder.lineStyle(10, 0x0)
     this.loaderBarBoder.drawRect(0, 0, loaderBarWidth, 50)
 
     this.loaderBar = new Container()
