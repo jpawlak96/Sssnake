@@ -1,13 +1,11 @@
-import { Graphics } from 'pixi.js'
-import { Apple } from '../entites/Apple'
 import { TICK_PER_SEC } from '../Constants'
-import { Snake } from '../entites/Snake'
 import { State } from '../enums/State'
 import { HUD } from '../hud/HUD'
 import { AbstractContainer } from './AbstractScene'
+import { Apple } from '../entites/Apple'
+import { Snake } from '../entites/Snake'
 
 export class GameScene extends AbstractContainer {
-  graphy: Graphics
   state: State
   hud: HUD
   deltaCounter: number = 0
@@ -18,16 +16,15 @@ export class GameScene extends AbstractContainer {
   constructor (width: number, height: number) {
     super(width, height)
 
-    this.graphy = new Graphics()
-    this.addChild(this.graphy)
-
     this.state = State.Started
 
     this.hud = new HUD(this.bounds.width, this.bounds.height)
-    this.addChild(this.hud)
-
     this.snake = new Snake()
     this.apple = new Apple(this.snake, this.hud)
+
+    this.addChild(this.apple)
+    this.addChild(this.snake)
+    this.addChild(this.hud)
   }
 
   update (deltaTime: number): void {
@@ -41,13 +38,6 @@ export class GameScene extends AbstractContainer {
       }
     }
     this.hud.update(this.state)
-    this.draw()
-  }
-
-  private draw (): void {
-    this.graphy.clear()
-    this.snake.draw(this.graphy)
-    this.apple.draw(this.graphy)
   }
 
   private updateGameState (): void {
