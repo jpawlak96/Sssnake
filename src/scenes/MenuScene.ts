@@ -33,6 +33,7 @@ export class MenuScene extends AbstractContainer {
     this.startPrompt.anchor.set(0.5)
     this.addChild(this.startPrompt)
 
+    document.addEventListener('touchstart', () => Manager.changeScene(GameScene), { once: true })
     document.addEventListener('keydown', () => Manager.changeScene(GameScene), { once: true })
   }
 

@@ -1,6 +1,10 @@
 import { Rectangle, Sprite } from 'pixi.js'
 import { TILE_SIZE } from '../Constants'
-import { Direction } from '../enums/Direction'
+import * as Utils from '../Utils'
+import { areOpposite, Direction } from '../enums/Direction'
+import { Input } from '../inputs/Input'
+import { KeyInput } from '../inputs/KeyInput'
+import { SwipeInput } from '../inputs/SwipeInput'
 
 export class Snake extends Sprite {
   parts: Rectangle[]
@@ -8,22 +12,26 @@ export class Snake extends Sprite {
 
   isHungry: boolean = true
 
-  moveDirection: Direction = Direction.Up
+  moveDirection: Direction = Direction.Down
   oldMoveDirection: Direction = this.moveDirection
+
+  input: Input
 
   constructor () {
     super()
-    this.parts = [
-      new Rectangle(4 * TILE_SIZE, 4 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
-      new Rectangle(4 * TILE_SIZE, 3 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
-      new Rectangle(4 * TILE_SIZE, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-    ]
+    this.parts = this.generateParts()
     this.head = this.parts[this.parts.length - 1]
-    window.addEventListener('keydown', this.handleKeyboardEvent.bind(this), false)
     this.generateSprite()
+
+    if (Utils.isMobileDeviceType()) {
+      this.input = new SwipeInput()
+    } else {
+      this.input = new KeyInput()
+    }
   }
 
   update (): void {
+    this.updateMoveDirection()
     let newHead: Rectangle
     switch (this.moveDirection) {
       case Direction.Down:
@@ -41,12 +49,19 @@ export class Snake extends Sprite {
     }
     this.head = newHead
     this.parts.push(newHead)
-    this.oldMoveDirection = this.moveDirection
     if (this.isHungry) {
       this.parts.shift()
     }
     this.isHungry = true
     this.generateSprite()
+  }
+
+  private generateParts (): Rectangle[] {
+    return [
+      new Rectangle(4 * TILE_SIZE, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+      new Rectangle(4 * TILE_SIZE, 3 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+      new Rectangle(4 * TILE_SIZE, 4 * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+    ]
   }
 
   private generateSprite (): void {
@@ -118,24 +133,11 @@ export class Snake extends Sprite {
     this.addChild(headSprite)
   }
 
-  private handleKeyboardEvent (event: any): void {
-    switch (event.key) {
-      case 'ArrowUp':
-        if (this.oldMoveDirection === Direction.Down) break
-        this.moveDirection = Direction.Up
-        break
-      case 'ArrowDown':
-        if (this.oldMoveDirection === Direction.Up) break
-        this.moveDirection = Direction.Down
-        break
-      case 'ArrowLeft':
-        if (this.oldMoveDirection === Direction.Right) break
-        this.moveDirection = Direction.Left
-        break
-      case 'ArrowRight':
-        if (this.oldMoveDirection === Direction.Left) break
-        this.moveDirection = Direction.Right
-        break
+  private updateMoveDirection (): void {
+    const direction = this.input.getDirection()
+    if (direction !== null && !areOpposite(this.moveDirection, direction)) {
+      this.moveDirection = direction
     }
+    this.oldMoveDirection = this.moveDirection
   }
 }
