@@ -1,31 +1,33 @@
 import { Direction } from '../enums/Direction'
 import { Input } from './Input'
 
-export class KeyInput implements Input {
-  direction: Direction | null = null
-
-  constructor () {
-    window.addEventListener('keydown', this.handleKeyboardEvent.bind(this), false)
+export class KeyInput extends Input {
+  setAnyEventHandler (handler: EventListener): void {
+    this.clearAllHandlers()
+    this.addEventListener('keydown', handler)
   }
 
-  getDirection (): Direction | null {
-    return this.direction
+  setDirectionChangeEventHandler (handler: any): void {
+    this.clearAllHandlers()
+    this.addEventListener('keydown', (event: any) => handler(this.handleKeyboardEvent(event)))
   }
 
-  private handleKeyboardEvent (event: any): void {
+  private handleKeyboardEvent (event: any): Direction | null {
+    let direction = null
     switch (event.key) {
       case 'ArrowUp':
-        this.direction = Direction.Up
+        direction = Direction.Up
         break
       case 'ArrowDown':
-        this.direction = Direction.Down
+        direction = Direction.Down
         break
       case 'ArrowLeft':
-        this.direction = Direction.Left
+        direction = Direction.Left
         break
       case 'ArrowRight':
-        this.direction = Direction.Right
+        direction = Direction.Right
         break
     }
+    return direction
   }
 }

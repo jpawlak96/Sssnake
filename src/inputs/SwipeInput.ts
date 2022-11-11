@@ -1,19 +1,19 @@
 import { Direction } from '../enums/Direction'
-import { Input } from './Input'
+import { Input } from './input'
 
-export class SwipeInput implements Input {
-  private direction: Direction | null = null
-
+export class SwipeInput extends Input {
   private initialX: number | null = null
   private initialY: number | null = null
 
-  constructor () {
-    document.addEventListener('touchstart', this.handleTouchStart.bind(this), false)
-    document.addEventListener('touchmove', this.handleTouchMove.bind(this), false)
+  setAnyEventHandler (handler: EventListener): void {
+    this.clearAllHandlers()
+    this.addEventListener('touchstart', handler)
   }
 
-  getDirection (): Direction | null {
-    return this.direction
+  setDirectionChangeEventHandler (handler: any): void {
+    this.clearAllHandlers()
+    this.addEventListener('touchstart', (event: any) => this.handleTouchStart(event))
+    this.addEventListener('touchmove', (event: any) => handler(this.handleTouchMove(event)))
   }
 
   private handleTouchStart (event: any): void {
@@ -21,9 +21,9 @@ export class SwipeInput implements Input {
     this.initialY = event.touches[0].clientY
   }
 
-  private handleTouchMove (event: any): void {
+  private handleTouchMove (event: any): Direction | null {
     if (!this.initialX || !this.initialY) {
-      return
+      return null
     }
 
     const currentX = event.touches[0].clientX
@@ -32,21 +32,24 @@ export class SwipeInput implements Input {
     const diffX = this.initialX - currentX
     const diffY = this.initialY - currentY
 
+    let direction: Direction
     if (Math.abs(diffX) > Math.abs(diffY)) {
       if (diffX > 0) {
-        this.direction = Direction.Right
+        direction = Direction.Right
       } else {
-        this.direction = Direction.Left
+        direction = Direction.Left
       }
     } else {
       if (diffY > 0) {
-        this.direction = Direction.Down
+        direction = Direction.Down
       } else {
-        this.direction = Direction.Up
+        direction = Direction.Up
       }
     }
 
     this.initialX = null
     this.initialY = null
+
+    return direction
   }
 }

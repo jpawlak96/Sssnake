@@ -1,4 +1,5 @@
 import { Application } from '@pixi/app'
+import { Input } from './inputs/Input'
 import { AbstractContainer } from './scenes/AbstractScene'
 
 // eslint-disable-next-line
@@ -7,8 +8,9 @@ export class Manager {
 
   private static app: Application
   private static currentScene: AbstractContainer
+  private static input: Input
 
-  public static initialize (width: number, height: number, background: number): void {
+  public static initialize (width: number, height: number, background: number, input: Input): void {
     Manager.app = new Application({
       view: document.getElementById('pixi-canvas') as HTMLCanvasElement,
       resolution: window.devicePixelRatio || 1,
@@ -20,15 +22,18 @@ export class Manager {
 
     Manager.app.ticker.add(Manager.update)
     document.addEventListener('visibilitychange', Manager.onVisibilityChange, false)
+
+    Manager.input = input
   }
 
-  public static changeScene (Clazz: new (width: number, height: number) => AbstractContainer): void {
+  public static changeScene (Clazz: new (width: number, height: number, input: Input) => AbstractContainer): void {
     if (Manager.currentScene) {
       Manager.app.stage.removeChild(Manager.currentScene)
       Manager.currentScene.destroy()
+      Manager.input.clearAllHandlers()
     }
 
-    Manager.currentScene = new Clazz(Manager.app.screen.width, Manager.app.screen.height)
+    Manager.currentScene = new Clazz(Manager.app.screen.width, Manager.app.screen.height, Manager.input)
     Manager.app.stage.addChild(Manager.currentScene)
   }
 

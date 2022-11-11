@@ -1,24 +1,18 @@
 import { WebfontLoaderPlugin } from 'pixi-webfont-loader'
 import { Container, Graphics, Loader } from 'pixi.js'
 import { assets } from '../assets'
+import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'
 import { MenuScene } from './MenuScene'
 
 export class LoaderScene extends AbstractContainer {
-  background: Graphics
   loaderBarFill: Graphics
   loaderBarBoder: Graphics
   loaderBar: any
 
-  constructor (width: number, height: number) {
-    super(width, height)
-
-    this.background = new Graphics()
-    this.background.beginFill(0x008000)
-    this.background.drawRect(0, 0, this.bounds.width, this.bounds.height)
-    this.background.endFill()
-    this.addChild(this.background)
+  constructor (width: number, height: number, input: Input) {
+    super(width, height, input)
 
     const loaderBarWidth = this.bounds.width * 0.8
 

@@ -1,10 +1,6 @@
 import { Rectangle, Sprite } from 'pixi.js'
 import { TILE_SIZE } from '../Constants'
-import * as Utils from '../Utils'
 import { areOpposite, Direction } from '../enums/Direction'
-import { Input } from '../inputs/Input'
-import { KeyInput } from '../inputs/KeyInput'
-import { SwipeInput } from '../inputs/SwipeInput'
 
 export class Snake extends Sprite {
   parts: Rectangle[]
@@ -13,38 +9,28 @@ export class Snake extends Sprite {
   isHungry: boolean = true
 
   moveDirection: Direction = Direction.Down
-  oldMoveDirection: Direction = this.moveDirection
-
-  input: Input
 
   constructor () {
     super()
     this.parts = this.generateParts()
     this.head = this.parts[this.parts.length - 1]
     this.generateSprite()
-
-    if (Utils.isMobileDeviceType()) {
-      this.input = new SwipeInput()
-    } else {
-      this.input = new KeyInput()
-    }
   }
 
   update (): void {
-    this.updateMoveDirection()
     let newHead: Rectangle
     switch (this.moveDirection) {
       case Direction.Down:
-        newHead = new Rectangle(this.head.x, this.head.y + TILE_SIZE, TILE_SIZE, TILE_SIZE)
+        newHead = new Rectangle(this.head.x, this.head.y + this.head.height, this.head.width, this.head.height)
         break
       case Direction.Up:
-        newHead = new Rectangle(this.head.x, this.head.y - TILE_SIZE, TILE_SIZE, TILE_SIZE)
+        newHead = new Rectangle(this.head.x, this.head.y - this.head.height, this.head.width, this.head.height)
         break
       case Direction.Left:
-        newHead = new Rectangle(this.head.x - TILE_SIZE, this.head.y, TILE_SIZE, TILE_SIZE)
+        newHead = new Rectangle(this.head.x - this.head.width, this.head.y, this.head.width, this.head.height)
         break
       case Direction.Right:
-        newHead = new Rectangle(this.head.x + TILE_SIZE, this.head.y, TILE_SIZE, TILE_SIZE)
+        newHead = new Rectangle(this.head.x + this.head.width, this.head.y, this.head.width, this.head.height)
         break
     }
     this.head = newHead
@@ -54,6 +40,12 @@ export class Snake extends Sprite {
     }
     this.isHungry = true
     this.generateSprite()
+  }
+
+  updateMoveDirection (direction: Direction): void {
+    if (direction !== null && !areOpposite(this.moveDirection, direction)) {
+      this.moveDirection = direction
+    }
   }
 
   private generateParts (): Rectangle[] {
@@ -66,24 +58,34 @@ export class Snake extends Sprite {
 
   private generateSprite (): void {
     this.removeChildren()
+    this.generateTail()
+    this.generateBody()
+    this.generateHead()
+  }
 
-    const previousPart = this.parts[1]
-    const tailPart = this.parts[0]
-    let tailSprite: Sprite
-    if (previousPart.x === tailPart.x && previousPart.y < tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-bottom')
-    } else if (previousPart.x === tailPart.x && previousPart.y > tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-top')
-    } else if (previousPart.x > tailPart.x && previousPart.y === tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-right')
-    } else {
-      tailSprite = Sprite.from('snake-tail-left')
+  private generateHead (): void {
+    let headSprite: Sprite
+    switch (this.moveDirection) {
+      case Direction.Up:
+        headSprite = Sprite.from('snake-head-top')
+        break
+      case Direction.Down:
+        headSprite = Sprite.from('snake-head-bottom')
+        break
+      case Direction.Left:
+        headSprite = Sprite.from('snake-head-left')
+        break
+      case Direction.Right:
+        headSprite = Sprite.from('snake-head-right')
+        break
     }
-    tailSprite.position.set(tailPart.x, tailPart.y)
-    tailSprite.width = TILE_SIZE
-    tailSprite.height = TILE_SIZE
-    this.addChild(tailSprite)
+    headSprite.position.set(this.head.x, this.head.y)
+    headSprite.width = this.head.width
+    headSprite.height = this.head.height
+    this.addChild(headSprite)
+  }
 
+  private generateBody (): void {
     for (let index = this.parts.length - 2; index > 0; index--) {
       const previousPart = this.parts[index - 1]
       const nextPart = this.parts[index + 1]
@@ -107,37 +109,28 @@ export class Snake extends Sprite {
         sprite = Sprite.from('snake-body-horizontal')
       }
       sprite.position.set(this.parts[index].x, this.parts[index].y)
-      sprite.width = TILE_SIZE
-      sprite.height = TILE_SIZE
+      sprite.width = part.width
+      sprite.height = part.height
       this.addChild(sprite)
     }
-
-    let headSprite: Sprite
-    switch (this.moveDirection) {
-      case Direction.Up:
-        headSprite = Sprite.from('snake-head-top')
-        break
-      case Direction.Down:
-        headSprite = Sprite.from('snake-head-bottom')
-        break
-      case Direction.Left:
-        headSprite = Sprite.from('snake-head-left')
-        break
-      case Direction.Right:
-        headSprite = Sprite.from('snake-head-right')
-        break
-    }
-    headSprite.position.set(this.head.x, this.head.y)
-    headSprite.width = TILE_SIZE
-    headSprite.height = TILE_SIZE
-    this.addChild(headSprite)
   }
 
-  private updateMoveDirection (): void {
-    const direction = this.input.getDirection()
-    if (direction !== null && !areOpposite(this.moveDirection, direction)) {
-      this.moveDirection = direction
+  private generateTail (): void {
+    const nextPart = this.parts[1]
+    const tailPart = this.parts[0]
+    let tailSprite: Sprite
+    if (nextPart.x === tailPart.x && nextPart.y < tailPart.y) {
+      tailSprite = Sprite.from('snake-tail-bottom')
+    } else if (nextPart.x === tailPart.x && nextPart.y > tailPart.y) {
+      tailSprite = Sprite.from('snake-tail-top')
+    } else if (nextPart.x > tailPart.x && nextPart.y === tailPart.y) {
+      tailSprite = Sprite.from('snake-tail-right')
+    } else {
+      tailSprite = Sprite.from('snake-tail-left')
     }
-    this.oldMoveDirection = this.moveDirection
+    tailSprite.position.set(tailPart.x, tailPart.y)
+    tailSprite.width = tailPart.width
+    tailSprite.height = tailPart.height
+    this.addChild(tailSprite)
   }
 }

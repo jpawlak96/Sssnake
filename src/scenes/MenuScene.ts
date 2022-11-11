@@ -1,4 +1,5 @@
-import { Graphics, Text } from 'pixi.js'
+import { Text } from 'pixi.js'
+import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'
 import { GameScene } from './GameScene'
@@ -9,14 +10,8 @@ export class MenuScene extends AbstractContainer {
   deltaCounter: number = 0
   tickTime: number = 0.5
 
-  constructor (width: number, height: number) {
-    super(width, height)
-
-    const graphy: Graphics = new Graphics()
-    graphy.beginFill(0x008000)
-    graphy.drawRect(0, 0, this.bounds.width, this.bounds.height)
-    graphy.endFill()
-    this.addChild(graphy)
+  constructor (width: number, height: number, input: Input) {
+    super(width, height, input)
 
     const logoShadow = new Text('SSSNAKE', { fontFamily: 'ComicGecko', fontSize: 140, fill: 0xe6e600 })
     logoShadow.position.set(this.bounds.width / 2 + 5, this.bounds.height / 6 * 2 + 5)
@@ -33,8 +28,7 @@ export class MenuScene extends AbstractContainer {
     this.startPrompt.anchor.set(0.5)
     this.addChild(this.startPrompt)
 
-    document.addEventListener('touchstart', () => Manager.changeScene(GameScene), { once: true })
-    document.addEventListener('keydown', () => Manager.changeScene(GameScene), { once: true })
+    input.setAnyEventHandler(() => Manager.changeScene(GameScene))
   }
 
   update (deltaTime: number): void {

@@ -1,5 +1,16 @@
-import { Direction } from '../enums/Direction'
+export abstract class Input {
+  listenerRemovers: any[] = []
 
-export interface Input {
-  getDirection: () => Direction | null
+  abstract setAnyEventHandler (func: EventListener): void
+  abstract setDirectionChangeEventHandler (func: any): void
+
+  clearAllHandlers (): void {
+    this.listenerRemovers.forEach(remover => remover())
+    this.listenerRemovers = []
+  }
+
+  protected addEventListener (type: string, listener: any): void {
+    document.addEventListener(type, listener, false)
+    this.listenerRemovers.push(() => document.removeEventListener(type, listener))
+  }
 }
