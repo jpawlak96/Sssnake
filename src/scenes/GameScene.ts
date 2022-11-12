@@ -1,4 +1,4 @@
-import { TICK_PER_SEC, TILES_NUMBER, TILE_SIZE } from '../Constants'
+import { TICK_PER_SEC, TILE_SIZE } from '../Constants'
 import { State } from '../enums/State'
 import { HUD } from '../hud/HUD'
 import { AbstractContainer } from './AbstractScene'
@@ -72,8 +72,8 @@ export class GameScene extends AbstractContainer {
 
   private generateApplePosition (): IPointData {
     while (true) {
-      const newX = Utils.getRandomInt(TILES_NUMBER - 1) * TILE_SIZE
-      const newY = Utils.getRandomInt(TILES_NUMBER - 1) * TILE_SIZE
+      const newX = Utils.getRandomInt(this.width / TILE_SIZE - 1) * TILE_SIZE
+      const newY = Utils.getRandomInt(this.height / TILE_SIZE - 1) * TILE_SIZE
 
       const newPosition = new Rectangle(newX, newY, TILE_SIZE, TILE_SIZE)
 

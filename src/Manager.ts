@@ -1,4 +1,5 @@
 import { Application } from '@pixi/app'
+import { IApplicationOptions } from 'pixi.js'
 import { Input } from './inputs/Input'
 import { AbstractContainer } from './scenes/AbstractScene'
 
@@ -10,15 +11,8 @@ export class Manager {
   private static currentScene: AbstractContainer
   private static input: Input
 
-  public static initialize (width: number, height: number, background: number, input: Input): void {
-    Manager.app = new Application({
-      view: document.getElementById('pixi-canvas') as HTMLCanvasElement,
-      resolution: window.devicePixelRatio || 1,
-      autoDensity: true,
-      backgroundColor: background,
-      width,
-      height
-    })
+  public static initialize (options: IApplicationOptions, input: Input): void {
+    Manager.app = new Application(options)
 
     Manager.app.ticker.add(Manager.update)
     document.addEventListener('visibilitychange', Manager.onVisibilityChange, false)
