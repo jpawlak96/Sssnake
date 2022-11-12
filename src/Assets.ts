@@ -16,5 +16,7 @@ export const assets = [
   { name: 'snake-tail-top', url: './graphics/snake-tail-top.png' },
   { name: 'snake-tail-right', url: './graphics/snake-tail-right.png' },
   // fonts
-  { name: 'ComicGecko', url: './fonts/ComicGecko.otf' }
+  { name: 'ComicGecko', url: './fonts/ComicGecko.otf' },
+  // sounds
+  { name: 'background', url: './sounds/background.mp3' }
 ]
