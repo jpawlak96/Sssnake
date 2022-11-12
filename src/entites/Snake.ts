@@ -1,14 +1,15 @@
-import { Rectangle, Sprite } from 'pixi.js'
+import { Container, Rectangle, Sprite } from 'pixi.js'
 import { TILE_SIZE } from '../Constants'
 import { areOpposite, Direction } from '../enums/Direction'
 
-export class Snake extends Sprite {
+export class Snake extends Container {
   parts: Rectangle[]
   head: Rectangle
 
   isHungry: boolean = true
 
   moveDirection: Direction = Direction.Down
+  lastMoveDirection: Direction = this.moveDirection
 
   constructor () {
     super()
@@ -33,6 +34,7 @@ export class Snake extends Sprite {
         newHead = new Rectangle(this.head.x + this.head.width, this.head.y, this.head.width, this.head.height)
         break
     }
+    this.lastMoveDirection = this.moveDirection
     this.head = newHead
     this.parts.push(newHead)
     if (this.isHungry) {
@@ -43,7 +45,7 @@ export class Snake extends Sprite {
   }
 
   updateMoveDirection (direction: Direction): void {
-    if (direction !== null && !areOpposite(this.moveDirection, direction)) {
+    if (direction !== null && !areOpposite(this.lastMoveDirection, direction)) {
       this.moveDirection = direction
     }
   }
