@@ -9,6 +9,7 @@ import { IPointData, Rectangle } from 'pixi.js'
 import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
 import { MenuScene } from './MenuScene'
+import { sound } from '@pixi/sound'
 
 export class GameScene extends AbstractContainer {
   state: State = State.Started
@@ -49,11 +50,13 @@ export class GameScene extends AbstractContainer {
   private updateGameState (): void {
     if (this.isSnakeCollides()) {
       this.state = State.GameOver
+      void sound.play('gameover')
       this.input.setAnyEventHandler(() => Manager.changeScene(MenuScene))
     } else if (this.isSnakeEats()) {
       this.apple.position = this.generateApplePosition()
       this.snake.isHungry = false
       this.hud.increaseEatenApples()
+      void sound.play('appleEaten')
     }
   }
 

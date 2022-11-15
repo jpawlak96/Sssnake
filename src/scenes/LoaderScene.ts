@@ -5,7 +5,7 @@ import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'
 import { MenuScene } from './MenuScene'
-import { SoundLoader } from '@pixi/sound'
+import { sound } from '@pixi/sound'
 
 export class LoaderScene extends AbstractContainer {
   isError: boolean = false
@@ -36,7 +36,6 @@ export class LoaderScene extends AbstractContainer {
     this.loaderBar.position.y = (this.bounds.height - this.loaderBar.height) / 2
     this.addChild(this.loaderBar)
 
-    Loader.registerPlugin(SoundLoader)
     Loader.registerPlugin(WebfontLoaderPlugin)
     Loader.shared.onProgress.add(this.onDownloadProgress, this)
     Loader.shared.onComplete.once(this.onDownloadComplete, this)
@@ -61,8 +60,7 @@ export class LoaderScene extends AbstractContainer {
   }
 
   private playBackgroundMusic (): void {
-    const sound = Loader.shared.resources.background.sound
-    void sound?.play({ loop: true, volume: 0.05 })
+    void sound.play('background', { loop: true, volume: 0.05 })
   }
 
   private onError (): void {
