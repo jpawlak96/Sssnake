@@ -51,7 +51,9 @@ export class GameScene extends AbstractContainer {
     if (this.isSnakeCollides()) {
       this.state = State.GameOver
       void sound.play('gameover')
-      this.input.setAnyEventHandler(() => Manager.changeScene(MenuScene))
+      setTimeout(
+        () => this.input.setAnyEventHandler(
+          () => Manager.changeScene(MenuScene)), 2000)
     } else if (this.isSnakeEats()) {
       this.apple.position = this.generateApplePosition()
       this.snake.isHungry = false
