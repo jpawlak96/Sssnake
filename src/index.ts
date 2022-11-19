@@ -1,5 +1,5 @@
 import { isMobile } from 'pixi.js'
-import { SCREEN_SIZE, BACKGROUND_COLOR } from './Constants'
+import { BACKGROUND_COLOR } from './Constants'
 import { KeyInput } from './inputs/KeyInput'
 import { SwipeInput } from './inputs/SwipeInput'
 import { Manager } from './Manager'
@@ -12,9 +12,9 @@ const options = {
   view: document.getElementById('pixi-canvas') as HTMLCanvasElement,
   resolution: window.devicePixelRatio || 1,
   autoDensity: true,
-  backgroundColor: BACKGROUND_COLOR,
-  width: SCREEN_SIZE,
-  height: SCREEN_SIZE
+  width: window.innerWidth,
+  height: window.innerHeight,
+  backgroundColor: BACKGROUND_COLOR
 }
 
 const input = isMobile.any ? new SwipeInput() : new KeyInput()

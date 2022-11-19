@@ -52,9 +52,9 @@ export class Snake extends Container {
 
   private generateParts (): Rectangle[] {
     return [
-      new Rectangle(4 * TILE_SIZE, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
-      new Rectangle(4 * TILE_SIZE, 3 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
-      new Rectangle(4 * TILE_SIZE, 4 * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+      new Rectangle(0, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+      new Rectangle(0, 1 * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+      new Rectangle(0, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     ]
   }
 

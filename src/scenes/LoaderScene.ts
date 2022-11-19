@@ -17,23 +17,24 @@ export class LoaderScene extends AbstractContainer {
   constructor (width: number, height: number, input: Input) {
     super(width, height, input)
 
-    const loaderBarWidth = this.bounds.width * 0.8
+    const loaderBarWidth = width * 0.8
+    const loaderBarHeight = height * 0.1
 
     this.loaderBarFill = new Graphics()
     this.loaderBarFill.beginFill(0x8b0000)
-    this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 50)
+    this.loaderBarFill.drawRect(0, 0, loaderBarWidth, loaderBarHeight)
     this.loaderBarFill.endFill()
     this.loaderBarFill.scale.x = 0
 
     this.loaderBarBoder = new Graphics()
-    this.loaderBarBoder.lineStyle(10, 0x0)
-    this.loaderBarBoder.drawRect(0, 0, loaderBarWidth, 50)
+    this.loaderBarBoder.lineStyle(10)
+    this.loaderBarBoder.drawRect(0, 0, loaderBarWidth, loaderBarHeight)
 
     this.loaderBar = new Container()
     this.loaderBar.addChild(this.loaderBarFill)
     this.loaderBar.addChild(this.loaderBarBoder)
-    this.loaderBar.position.x = (this.bounds.width - this.loaderBar.width) / 2
-    this.loaderBar.position.y = (this.bounds.height - this.loaderBar.height) / 2
+    this.loaderBar.position.x = (width - this.loaderBar.width) / 2
+    this.loaderBar.position.y = (height - this.loaderBar.height) / 2
     this.addChild(this.loaderBar)
 
     Loader.registerPlugin(WebfontLoaderPlugin)

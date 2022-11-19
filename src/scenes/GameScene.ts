@@ -1,4 +1,4 @@
-import { TICK_PER_SEC, TILE_SIZE } from '../Constants'
+import { DELAY_AFTER_GAMEOVER_MSEC, TICK_PER_SEC, TILE_SIZE } from '../Constants'
 import { State } from '../enums/State'
 import { HUD } from '../hud/HUD'
 import { AbstractContainer } from './AbstractScene'
@@ -53,7 +53,7 @@ export class GameScene extends AbstractContainer {
       void sound.play('gameover')
       setTimeout(
         () => this.input.setAnyEventHandler(
-          () => Manager.changeScene(MenuScene)), 2000)
+          () => Manager.changeScene(MenuScene)), DELAY_AFTER_GAMEOVER_MSEC)
     } else if (this.isSnakeEats()) {
       this.apple.position = this.generateApplePosition()
       this.snake.isHungry = false
@@ -77,8 +77,8 @@ export class GameScene extends AbstractContainer {
 
   private generateApplePosition (): IPointData {
     while (true) {
-      const newX = Utils.getRandomInt(this.width / TILE_SIZE - 1) * TILE_SIZE
-      const newY = Utils.getRandomInt(this.height / TILE_SIZE - 1) * TILE_SIZE
+      const newX = Utils.getRandomNumber(this.bounds.width / TILE_SIZE - 1) * TILE_SIZE
+      const newY = Utils.getRandomNumber(this.bounds.height / TILE_SIZE - 1) * TILE_SIZE
 
       const newPosition = new Rectangle(newX, newY, TILE_SIZE, TILE_SIZE)
 

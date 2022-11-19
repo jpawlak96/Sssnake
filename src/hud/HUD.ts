@@ -1,4 +1,5 @@
 import { Text, Container } from 'pixi.js'
+import { DELAY_AFTER_GAMEOVER_MSEC } from '../Constants'
 import { State } from '../enums/State'
 
 export class HUD extends Container {
@@ -20,7 +21,7 @@ export class HUD extends Container {
   update (state: State, deltaCounter: number): void {
     this.scoreText.text = `${this.eatenApples} apples`
     if (state === State.GameOver) {
-      if (deltaCounter < 2) {
+      if (deltaCounter < DELAY_AFTER_GAMEOVER_MSEC / 1000) {
         this.endText.height += deltaCounter
         this.endText.width += deltaCounter
       }
