@@ -1,17 +1,16 @@
-name: Build and publish project
+name: Build and deploy project
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  Build & deploy:
     runs-on: ubuntu-latest
 
     steps:
