@@ -4,7 +4,7 @@ import { HUD } from '../hud/HUD'
 import { AbstractContainer } from './AbstractScene'
 import { Apple } from '../entites/Apple'
 import { Snake } from '../entites/Snake'
-import * as Utils from '../Utils'
+import { getRandomNumber } from '../Utils'
 import { IPointData, Rectangle } from 'pixi.js'
 import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
@@ -77,8 +77,8 @@ export class GameScene extends AbstractContainer {
 
   private generateApplePosition (): IPointData {
     while (true) {
-      const newX = Utils.getRandomNumber(this.bounds.width / TILE_SIZE - 1) * TILE_SIZE
-      const newY = Utils.getRandomNumber(this.bounds.height / TILE_SIZE - 1) * TILE_SIZE
+      const newX = getRandomNumber(this.bounds.width / TILE_SIZE - 1) * TILE_SIZE
+      const newY = getRandomNumber(this.bounds.height / TILE_SIZE - 1) * TILE_SIZE
 
       const newPosition = new Rectangle(newX, newY, TILE_SIZE, TILE_SIZE)
 
