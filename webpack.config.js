@@ -80,7 +80,8 @@ module.exports = (env, argv) => {
         minify: false
       }),
       new webpack.ProvidePlugin({
-        PIXI: 'pixi.js'
+        PIXI: 'pixi.js',
+        sound: '@pixi/sound'
       })
     ]
   })
