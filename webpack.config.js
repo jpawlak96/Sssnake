@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
     // Config for your testing server
     devServer: {
       compress: true,
-      static: false,
+      static: 'static',
       client: {
         logging: 'warn',
         overlay: {
