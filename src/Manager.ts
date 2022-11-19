@@ -5,7 +5,6 @@ import { Input } from './inputs/Input'
 import { AbstractContainer } from './scenes/AbstractScene'
 import { clamp } from './Utils'
 
-// eslint-disable-next-line
 export class Manager {
   private static worldWidth: number
   private static worldHeight: number
