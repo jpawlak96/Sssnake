@@ -69,16 +69,16 @@ export class Snake extends Container {
     let headSprite: Sprite
     switch (this.moveDirection) {
       case Direction.Up:
-        headSprite = Sprite.from('snake-head-top')
+        headSprite = Sprite.from('snake-head-top.png')
         break
       case Direction.Down:
-        headSprite = Sprite.from('snake-head-bottom')
+        headSprite = Sprite.from('snake-head-bottom.png')
         break
       case Direction.Left:
-        headSprite = Sprite.from('snake-head-left')
+        headSprite = Sprite.from('snake-head-left.png')
         break
       case Direction.Right:
-        headSprite = Sprite.from('snake-head-right')
+        headSprite = Sprite.from('snake-head-right.png')
         break
     }
     headSprite.position.set(this.head.x, this.head.y)
@@ -96,17 +96,17 @@ export class Snake extends Container {
 
       let sprite: Sprite
       if (tempX < 0 && tempY < 0) {
-        sprite = Sprite.from('snake-body-top-left')
+        sprite = Sprite.from('snake-body-top-left.png')
       } else if (tempX < 0 && tempY > 0) {
-        sprite = Sprite.from('snake-body-bottom-left')
+        sprite = Sprite.from('snake-body-bottom-left.png')
       } else if (tempX > 0 && tempY > 0) {
-        sprite = Sprite.from('snake-body-bottom-right')
+        sprite = Sprite.from('snake-body-bottom-right.png')
       } else if (tempX > 0 && tempY < 0) {
-        sprite = Sprite.from('snake-body-top-right')
+        sprite = Sprite.from('snake-body-top-right.png')
       } else if (previousPart.x === nextPart.x) {
-        sprite = Sprite.from('snake-body-vertical')
+        sprite = Sprite.from('snake-body-vertical.png')
       } else {
-        sprite = Sprite.from('snake-body-horizontal')
+        sprite = Sprite.from('snake-body-horizontal.png')
       }
       sprite.position.set(this.parts[index].x, this.parts[index].y)
       this.addChild(sprite)
@@ -118,13 +118,13 @@ export class Snake extends Container {
     const tailPart = this.parts[0]
     let tailSprite: Sprite
     if (nextPart.x === tailPart.x && nextPart.y < tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-bottom')
+      tailSprite = Sprite.from('snake-tail-bottom.png')
     } else if (nextPart.x === tailPart.x && nextPart.y > tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-top')
+      tailSprite = Sprite.from('snake-tail-top.png')
     } else if (nextPart.x > tailPart.x && nextPart.y === tailPart.y) {
-      tailSprite = Sprite.from('snake-tail-right')
+      tailSprite = Sprite.from('snake-tail-right.png')
     } else {
-      tailSprite = Sprite.from('snake-tail-left')
+      tailSprite = Sprite.from('snake-tail-left.png')
     }
     tailSprite.position.set(tailPart.x, tailPart.y)
     this.addChild(tailSprite)

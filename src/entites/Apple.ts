@@ -4,7 +4,7 @@ export class Apple extends Sprite {
   bounds: Rectangle
 
   constructor () {
-    super(Texture.from('apple'))
+    super(Texture.from('apple.png'))
     this.bounds = new Rectangle()
     this.bounds.width = this.width
     this.bounds.height = this.height
