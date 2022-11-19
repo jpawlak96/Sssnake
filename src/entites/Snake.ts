@@ -82,8 +82,6 @@ export class Snake extends Container {
         break
     }
     headSprite.position.set(this.head.x, this.head.y)
-    headSprite.width = this.head.width
-    headSprite.height = this.head.height
     this.addChild(headSprite)
   }
 
@@ -111,8 +109,6 @@ export class Snake extends Container {
         sprite = Sprite.from('snake-body-horizontal')
       }
       sprite.position.set(this.parts[index].x, this.parts[index].y)
-      sprite.width = part.width
-      sprite.height = part.height
       this.addChild(sprite)
     }
   }
@@ -131,8 +127,6 @@ export class Snake extends Container {
       tailSprite = Sprite.from('snake-tail-left')
     }
     tailSprite.position.set(tailPart.x, tailPart.y)
-    tailSprite.width = tailPart.width
-    tailSprite.height = tailPart.height
     this.addChild(tailSprite)
   }
 }
