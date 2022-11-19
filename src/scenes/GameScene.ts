@@ -28,7 +28,7 @@ export class GameScene extends AbstractContainer {
     this.addChild(this.snake)
 
     this.apple = new Apple()
-    this.apple.position = this.generateApplePosition()
+    this.apple.setPosition(this.generateApplePosition())
     this.addChild(this.apple)
 
     this.hud = new HUD(this.bounds.width, this.bounds.height)
@@ -55,7 +55,7 @@ export class GameScene extends AbstractContainer {
         () => this.input.onAnyEvent(
           () => Manager.changeScene(MenuScene)), DELAY_AFTER_GAMEOVER_MSEC)
     } else if (this.isSnakeEats()) {
-      this.apple.position = this.generateApplePosition()
+      this.apple.setPosition(this.generateApplePosition())
       this.snake.isHungry = false
       this.hud.increaseEatenApples()
       void sound.play('appleEaten')
@@ -72,7 +72,7 @@ export class GameScene extends AbstractContainer {
   }
 
   private isSnakeEats (): boolean {
-    return this.snake.head.intersects(this.apple.getBounds())
+    return this.snake.head.intersects(this.apple.bounds)
   }
 
   private generateApplePosition (): IPointData {
