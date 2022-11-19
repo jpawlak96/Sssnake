@@ -62,7 +62,8 @@ export class Manager {
 
   private static update (): void {
     if (Manager.currentScene) {
-      const deltaTime = Manager.app.ticker.elapsedMS
+      let deltaTime = Manager.app.ticker.elapsedMS
+      if (deltaTime > 500) deltaTime = 0
       Manager.currentScene.update(deltaTime)
     }
   }
