@@ -34,7 +34,7 @@ export class MenuScene extends AbstractContainer {
     this.startPrompt.scale.set(halfWidth / this.startPrompt.width)
     this.addChild(this.startPrompt)
 
-    input.setAnyEventHandler(() => Manager.changeScene(GameScene))
+    input.onAnyEvent(() => Manager.changeScene(GameScene))
   }
 
   update (deltaTime: number): void {

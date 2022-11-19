@@ -1,16 +1,16 @@
 import { Direction } from '../enums/Direction'
-import { Input } from './input'
+import { Input } from './Input'
 
 export class SwipeInput extends Input {
   private initialX: number | null = null
   private initialY: number | null = null
 
-  setAnyEventHandler (handler: EventListener): void {
+  onAnyEvent (handler: EventListener): void {
     this.clearAllHandlers()
     this.addEventListener('touchstart', handler)
   }
 
-  setDirectionChangeEventHandler (handler: any): void {
+  onDirectionChangeEvent (handler: any): void {
     this.clearAllHandlers()
     this.addEventListener('touchstart', (event: any) => this.handleTouchStart(event))
     this.addEventListener('touchmove', (event: any) => handler(this.handleTouchMove(event)))

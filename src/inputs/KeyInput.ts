@@ -2,12 +2,12 @@ import { Direction } from '../enums/Direction'
 import { Input } from './Input'
 
 export class KeyInput extends Input {
-  setAnyEventHandler (handler: EventListener): void {
+  onAnyEvent (handler: EventListener): void {
     this.clearAllHandlers()
     this.addEventListener('keydown', handler)
   }
 
-  setDirectionChangeEventHandler (handler: any): void {
+  onDirectionChangeEvent (handler: any): void {
     this.clearAllHandlers()
     this.addEventListener('keydown', (event: any) => handler(this.handleKeyboardEvent(event)))
   }

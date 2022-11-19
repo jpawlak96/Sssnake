@@ -1,8 +1,8 @@
 export abstract class Input {
   listenerRemovers: any[] = []
 
-  abstract setAnyEventHandler (func: EventListener): void
-  abstract setDirectionChangeEventHandler (func: any): void
+  abstract onAnyEvent (func: EventListener): void
+  abstract onDirectionChangeEvent (func: any): void
 
   clearAllHandlers (): void {
     this.listenerRemovers.forEach(remover => remover())

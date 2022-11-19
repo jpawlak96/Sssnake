@@ -24,7 +24,7 @@ export class GameScene extends AbstractContainer {
 
     this.snake = new Snake()
     const snakeHandeler = this.snake.updateMoveDirection.bind(this.snake)
-    this.input.setDirectionChangeEventHandler(snakeHandeler)
+    this.input.onDirectionChangeEvent(snakeHandeler)
     this.addChild(this.snake)
 
     this.apple = new Apple()
@@ -52,7 +52,7 @@ export class GameScene extends AbstractContainer {
       this.state = State.GameOver
       void sound.play('gameover')
       setTimeout(
-        () => this.input.setAnyEventHandler(
+        () => this.input.onAnyEvent(
           () => Manager.changeScene(MenuScene)), DELAY_AFTER_GAMEOVER_MSEC)
     } else if (this.isSnakeEats()) {
       this.apple.position = this.generateApplePosition()
