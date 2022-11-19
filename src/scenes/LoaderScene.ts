@@ -1,6 +1,6 @@
 import { WebfontLoaderPlugin } from 'pixi-webfont-loader'
 import { Container, Graphics, Loader } from 'pixi.js'
-import { assets } from '../assets'
+import { assets } from '../Assets'
 import { Input } from '../inputs/Input'
 import { Manager } from '../Manager'
 import { AbstractContainer } from './AbstractScene'

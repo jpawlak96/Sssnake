@@ -1,5 +1,5 @@
 export const assets = [
-  // graphics
+  // spritesheet
   { name: 'spritesheet', url: './spritesheet/spritesheet.json' },
   // fonts
   { name: 'ComicGecko', url: './fonts/ComicGecko.otf' },
